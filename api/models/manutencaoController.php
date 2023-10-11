@@ -61,7 +61,6 @@ if($requestData['operacao'] == 'create'){
             //Montar a expressão lógica que irá compor os filtros
             //Aqui você deverá determinar quais colunas farão parte do filtro
             $sql .= " AND (id_manutencao LIKE '$filtro%' ";
-            $sql .= " OR data LIKE '$filtro%') ";
         }
         //Obter o total dos dados filtrados
         $resultado = $pdo->query($sql);
@@ -174,7 +173,7 @@ if($requestData['operacao'] == 'delete'){
 if($requestData['operacao'] == 'view'){
     
     // gerar a querie de insersao no banco de dados 
-    $sql = "SELECT * FROM munutencao WHERE id_manutencao = ".$requestData['id_manutencao']."";
+    $sql = "SELECT * FROM manutencao WHERE id_manutencao = ".$requestData['id_manutencao']."";
     // preparar a querie para gerar objetos de insersao no banco de dados
 
     $resultado = $pdo->query($sql);

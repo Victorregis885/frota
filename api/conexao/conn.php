@@ -1,12 +1,12 @@
 <?php
 
-$hostname = 'localhost: 3301';
+$hostname = 'localhost: 3306';
 
 $dbname = 'frota';
 
 $username = 'root';
 
-$password = 'usbw';
+$password = '';
 
 
 try {

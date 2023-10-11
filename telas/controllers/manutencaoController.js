@@ -193,4 +193,3 @@ $('#table-manutencao').on('click', 'button.btn-delete', function(e){
 })
 
 })
-
