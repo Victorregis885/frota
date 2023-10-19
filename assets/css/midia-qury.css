@@ -33,7 +33,7 @@ Grandes telas: acima de 1200px
 
 @media screen and (min-width: 992px) { /* CONFIGURAÇÕES PARA DESKTOP */
     body {
-        background-image: linear-gradient(to top, #49a09d, #000000, #0b016b );
+        background-image: linear-gradient(to top, #49a09d, #64cfcc, #b678df );
     }
 
     section#login {
