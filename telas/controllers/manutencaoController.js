@@ -18,14 +18,18 @@ function CRUD(dados, url){
         }
         else if(dados.type == 'view'){
             $('#data').val(dados.dados.data)
-            $('#id_manutencao').val(dados.dados.id_manutencao)
-            $('#valor_servico').val(dados.dados.valor_servico)
-            $('#valor_pecas').val(dados.dados.valor_pecas)
-            $('#valor_total').val(dados.dados.valor_total)
-            $('#descricao').val(dados.dados.descricao)
-            $('#veiculo_id_veiculo').val(dados.dados.veiculo_id_veiculo)
-            $('#oficina_id_oficina').val(dados.dados.oficina_id_oficina)
-            $('#pecas_id_peca').val(dados.dados.pecas_id_peca)
+                $('#id_manutencao').val(dados.dados.id_manutencao)
+                $('#valor_servico').val(dados.dados.valor_servico)
+                $('#valor_pecas').val(dados.dados.valor_pecas)
+
+                // Calcular o valor_total aqui
+                let valorTotal = parseFloat(dados.dados.valor_servico) + parseFloat(dados.dados.valor_pecas);
+                $('#valor_total').val(valorTotal.toFixed(2))
+
+                $('#descricao').val(dados.dados.descricao)
+                $('#ID_CH_VEICULO').val(dados.dados.veiculo)
+                $('#ID_CH_OFICINA').val(dados.dados.oficina)
+                $('#ID_CH_PECA').val(dados.dados.pecas)
         }
         }
     })
@@ -73,15 +77,15 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'veiculo_id_veiculo',
+                "data": 'veiculo',
                 "className": 'text-left'
             },
             {
-                "data": 'oficina_id_oficina',
+                "data": 'oficina',
                 "className": 'text-left'
             },
             {
-                "data": 'pecas_id_peca',
+                "data": 'pecas',
                 "className": 'text-left'
             },
             {
@@ -98,9 +102,36 @@ $(document).ready(function(){
                 }
             }
         ]
+        
     })
 
+    function carDados() {
 
+        $('.select').each(function() {
+        var name = $(this).attr('id');
+        var opcoes = '<option value="">Escolha a opção...</option>';
+        data = name.split('_');
+        var dados = 'banco=';
+        dados += data[data.length - 1];
+        dados += '&operacao=viewAll';
+        
+        $.ajax({
+            dataType: 'JSON',
+            type: 'POST',
+            async: true,
+            url: "api/models/manutencaoController.php",
+            data: dados,
+            success: function(dados) {
+                if (dados.type == "success") {
+                    $.each(dados.dados, function(indexInArray, valueOfElement) {
+                        opcoes += '<option value="' + valueOfElement.ID + '">'  + '</option>';
+                    });
+                    $('#' + name).html(opcoes);
+                }
+            }
+        });
+    });
+}
 
     $('.btn-new').click(function(e){
         e.preventDefault()
@@ -193,3 +224,5 @@ $('#table-manutencao').on('click', 'button.btn-delete', function(e){
 })
 
 })
+
+
