@@ -5,6 +5,9 @@ include('../conexao/conn.php');
 $requestData = $_REQUEST;
 
 if($requestData['operacao'] == 'create'){
+
+    if(Chave_Estrangeira($requestData, $pdo)){
+
     if(empty($_REQUEST['placa']) || empty($_REQUEST['marca']) || empty($_REQUEST['combustivel']) || empty($_REQUEST['cor']) || empty($_REQUEST['usuario_id_usuario'])){
         $dados = array(
             "type" => 'error',
@@ -14,27 +17,24 @@ if($requestData['operacao'] == 'create'){
     else { 
         try{
             
-            // gerar a querie de insersao no banco de dados 
-            $sql = "INSERT INTO veiculo (placa, marca, combustivel, cor, usuario_id_usuario) VALUES (?, ?, ?, ?, ?)"; // colocar ? para deixar mais seguro
-            // preparar a querie para gerar objetos de insersao no banco de dados
+            $sql = "INSERT INTO veiculo (placa, marca, combustivel, cor, usuario_id_usuario) VALUES (?, ?, ?, ?, ?)"; 
+            
         
-            $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
+            $stmt = $pdo->prepare($sql); 
         
-            // se existir requerir os valores
             $stmt->execute([
                 $requestData['placa'],
                 $requestData['marca'],
                 $requestData['combustivel'],
                 $requestData['cor'],
-                $requestData['usuario_id_usuario']
+                $requestData['ID_CH_USUARIO']
             ]);
         
-            // tranforma os dados em um array
             $dados = array(
                 'type' => 'success',
                 'mensagem' => 'Registro salvo com sucesso!'
             );
-            // se nao existir mostrar erro
+
         }catch (PDOException $e){
             $dados = array(
                 'type' => 'error',
@@ -43,43 +43,41 @@ if($requestData['operacao'] == 'create'){
         }
         echo json_encode($dados);
     }
+    }
 }
 
-
-
     if($requestData['operacao'] == 'read'){
-        $colunas = $requestData['columns']; //Obter as colunas vindas do resquest
-        //Preparar o comando sql para obter os dados da categoria
+        $colunas = $requestData['columns']; 
         $sql = "SELECT * FROM veiculo WHERE 1=1 ";
-        //Obter o total de registros cadastrados
+        
         $resultado = $pdo->query($sql);
         $qtdeLinhas = $resultado->rowCount();
-        //Verificando se há filtro determinado
+
+        
         $filtro = $requestData['search']['value'];
+
         if( !empty( $filtro ) ){
-            //Montar a expressão lógica que irá compor os filtros
-            //Aqui você deverá determinar quais colunas farão parte do filtro
-            $sql .= " AND (id_veiculo LIKE '$filtro%' ";
+            $sql .= " AND (id LIKE '$filtro%' ";
             $sql .= " OR placa LIKE '$filtro%') ";
         }
-        //Obter o total dos dados filtrados
+
         $resultado = $pdo->query($sql);
         $totalFiltrados = $resultado->rowCount();
-        //Obter valores para ORDER BY      
-        $colunaOrdem = $requestData['order'][0]['column']; //Obtém a posição da coluna na ordenação
-        $ordem = $colunas[$colunaOrdem]['data']; //Obtém o nome da coluna para a ordenação
-        $direcao = $requestData['order'][0]['dir']; //Obtém a direção da ordenação
-        //Obter valores para o LIMIT
-        $inicio = $requestData['start']; //Obtém o ínicio do limite
-        $tamanho = $requestData['length']; //Obtém o tamanho do limite
-        //Realizar o ORDER BY com LIMIT
+
+        $colunaOrdem = $requestData['order'][0]['column']; 
+        $ordem = $colunas[$colunaOrdem]['data']; 
+        $direcao = $requestData['order'][0]['dir']; 
+
+        $inicio = $requestData['start']; 
+        $tamanho = $requestData['length']; 
+
         $sql .= " ORDER BY $ordem $direcao LIMIT $inicio, $tamanho ";
         $resultado = $pdo->query($sql);
         $resultData = array();
         while($row = $resultado->fetch(PDO::FETCH_ASSOC)){
             $resultData[] = array_map('utf8_encode', $row);
         }
-        //Monta o objeto json para retornar ao DataTable
+        
         $dados = array(
             "draw" => intval($requestData['draw']),
             "recordsTotal" => intval($qtdeLinhas),
@@ -99,28 +97,24 @@ if($requestData['operacao'] == 'update'){
     else { 
     try{
 
-        $sql = "UPDATE veiculo SET placa = ?, marca = ?, combustivel = ?, cor = ?, usuario_id_usuario = ? WHERE id_veiculo = ?";
-        // preparar a querie para gerar objetos de insersao no banco de dados
+        $sql = "UPDATE veiculo SET placa = ?, marca = ?, combustivel = ?, cor = ?, usuario_id_usuario = ? WHERE id = ?";
     
-        $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
+        $stmt = $pdo->prepare($sql); 
     
-        // se existir requerir os valores
         $stmt->execute([
             $requestData['placa'],
             $requestData['marca'],
             $requestData['combustivel'],
             $requestData['cor'],
-            $requestData['usuario_id_usuario'],
-            $requestData['id_veiculo']
+            $requestData['ID_CH_USUARIO'],
+            $requestData['id']
         ]);
         
-    
-        // tranforma os dados em um array
         $dados = array(
             'type' => 'success',
             'mensagem' => 'Atualizado com sucesso!'
         );
-        // se nao existir mostrar erro
+
     }catch (PDOException $e){
         $dados = array(
             'type' => 'error',
@@ -132,31 +126,24 @@ if($requestData['operacao'] == 'update'){
     }
 }
 
-
-
-
 if($requestData['operacao'] == 'delete'){
     
     try{
 
         
-        // gerar a querie de insersao no banco de dados 
-        $sql = "DELETE FROM veiculo WHERE id_veiculo = ?";
-        // preparar a querie para gerar objetos de insersao no banco de dados
+        $sql = "DELETE FROM veiculo WHERE id = ?";
     
-        $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
+        $stmt = $pdo->prepare($sql); 
     
-        // se existir requerir os valores
         $stmt->execute([
-            $requestData['id_veiculo']
+            $requestData['id']
         ]);
     
-        // tranforma os dados em um array
         $dados = array(
             'type' => 'success',
             'mensagem' => 'Excluido com sucesso!'
         );
-        // se nao existir mostrar erro
+
     }catch (PDOException $e){
         $dados = array(
             'type' => 'error',
@@ -174,9 +161,7 @@ if($requestData['operacao'] == 'delete'){
 
 if($requestData['operacao'] == 'view'){
     
-    // gerar a querie de insersao no banco de dados 
-    $sql = "SELECT * FROM veiculo WHERE id_veiculo = ".$requestData['id_veiculo']."";
-    // preparar a querie para gerar objetos de insersao no banco de dados
+    $sql = "SELECT * FROM veiculo WHERE id = ".$requestData['id']."";
 
     $resultado = $pdo->query($sql);
     if($resultado){
@@ -199,4 +184,76 @@ if($requestData['operacao'] == 'view'){
 echo json_encode($dados);
 
 
+}
+
+
+if($requestData['operacao'] == "viewAll"){
+
+    $sql = "SELECT * FROM ".$requestData['banco']."";
+    $resultado = $pdo->query($sql);
+
+    if($resultado){
+        $result = array();
+        while($row = $resultado->fetch(PDO::FETCH_ASSOC)){
+            $result[] = array_map('utf8_encode', $row);
+        }
+
+        $dados = array(
+            'type' => 'success',
+            'dados' => $result
+        );
+    }
+    else {
+        $dados = array(
+            'type' => 'error',
+            'mensagem' => 'Erro ao pesquisar informações:'
+        );   
+    }
+    echo json_encode($dados);
+}
+
+function Chave_Estrangeira(Array $dados, $pdo){
+        
+    $padrao = '/[^a-zA-Z0-9\s]/';
+    $tabela = $dados['tabela'];
+
+    foreach($dados as $chave => $valor){
+        $coluna = preg_replace($padrao, ' ',$chave);
+        $array = explode(" ", $coluna);
+
+            if(in_array("CH", $array)){
+
+                $copArray = $array;
+                $NewArray = array_pop($copArray);
+     
+                $NewArray = array_diff($array, [$NewArray]);
+                $indice = array_key_first($NewArray);
+                $ColEstrang = $NewArray[$indice];
+                $sql = "SELECT {$tabela}.* FROM {$tabela} INNER JOIN {$array[2]} ON {$valor} = {$array[2]}.{$ColEstrang}";
+                $stmt = $pdo->prepare($sql);
+                if($stmt->execute()){
+                    $ColEstrangA = $ColEstrang;
+                    if($stmt->rowCount() > 0){
+                    } else {
+                        $mgs = "Desculpe mais o valor {$valor} do {$ColEstrangA} da Tabela {$array[2]} não existe";
+                        $dados = array(
+                            'type' => 'error',
+                            'mensagem' => $mgs
+                        );
+                        echo json_encode($dados);
+                        die();
+                    }
+                }else{
+                    $mgs = "Erro ao procurar chave estrangeira da tabela {$tabela}";
+                    $dados = array(
+                        'type' => 'error',
+                        'mensagem' => $mgs
+                    );
+                    echo json_encode($dados);
+                    die();
+                }
+            } elseif(!in_array("CH", $array)) {
+            }
+    }
+    return $stmt->fetchAll();
 }

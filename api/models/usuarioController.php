@@ -53,7 +53,7 @@ if($requestData['operacao'] == 'read'){
         if( !empty( $filtro ) ){
             //Montar a expressão lógica que irá compor os filtros
             //Aqui você deverá determinar quais colunas farão parte do filtro
-            $sql .= " AND (id_usuario LIKE '$filtro%' ";
+            $sql .= " AND (id LIKE '$filtro%' ";
             $sql .= " OR email LIKE '$filtro%') ";
         }
         //Obter o total dos dados filtrados
@@ -89,7 +89,7 @@ if($requestData['operacao'] == 'read'){
     
         try{
     
-            $sql = "UPDATE usuario SET nome_usuario = ?, login = ?, senha = ?, email = ?  WHERE id_usuario = ?";
+            $sql = "UPDATE usuario SET nome_usuario = ?, login = ?, senha = ?, email = ?  WHERE id = ?";
             // preparar a querie para gerar objetos de insersao no banco de dados
         
             $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
@@ -100,7 +100,7 @@ if($requestData['operacao'] == 'read'){
                 $requestData['login'],
                 $requestData['senha'],
                 $requestData['email'],
-                $requestData['id_usuario']
+                $requestData['id']
             ]);
             
         
@@ -130,14 +130,14 @@ if($requestData['operacao'] == 'delete'){
 
         
         // gerar a querie de insersao no banco de dados 
-        $sql = "DELETE FROM usuario WHERE id_usuario = ?";
+        $sql = "DELETE FROM usuario WHERE id = ?";
         // preparar a querie para gerar objetos de insersao no banco de dados
     
         $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
     
         // se existir requerir os valores
         $stmt->execute([
-            $requestData['id_usuario']
+            $requestData['id']
         ]);
     
         // tranforma os dados em um array
@@ -165,7 +165,7 @@ if($requestData['operacao'] == 'delete'){
 if($requestData['operacao'] == 'view'){
     
     // gerar a querie de insersao no banco de dados 
-    $sql = "SELECT * FROM usuario WHERE id_usuario = ".$requestData['id_usuario']."";
+    $sql = "SELECT * FROM usuario WHERE id = ".$requestData['id']."";
     // preparar a querie para gerar objetos de insersao no banco de dados
 
     $resultado = $pdo->query($sql);
@@ -196,12 +196,12 @@ if($requestData['operacao'] == 'login'){
 
     
 
-    $sql = $pdo->query("SELECT *, count(id_usuario) as achou FROM usuario WHERE login = '" . $requestData['login'] ."' AND senha = '" . $requestData['senha']."'");
+    $sql = $pdo->query("SELECT *, count(id) as achou FROM usuario WHERE login = '" . $requestData['login'] ."' AND senha = '" . $requestData['senha']."'");
 
     while ($resultado = $sql->fetch(PDO::FETCH_ASSOC)) {
         if($resultado['achou'] == 1){
             session_start();
-            $_SESSION['usuario'] = $resultado['id_usuario'];
+            $_SESSION['usuario'] = $resultado['id'];
             $_SESSION['nome_usuario'] = $resultado['nome_usuario'];
 
             $dados = array(

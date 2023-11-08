@@ -1,4 +1,3 @@
-
 function CRUD(dados, url){
     $.ajax({
         dataType: 'JSON',
@@ -17,12 +16,12 @@ function CRUD(dados, url){
             $('#modal-veiculo').modal('hide')
         }
         else if(dados.type == 'view'){
-            $('#id_veiculo').val(dados.dados.id_veiculo)
+            $('#id').val(dados.dados.id)
             $('#placa').val(dados.dados.placa)
             $('#marca').val(dados.dados.marca)
             $('#combustivel').val(dados.dados.combustivel)
             $('#cor').val(dados.dados.cor)
-            $('#usuario_id_usuario').val(dados.dados.usuario_id_usuario)
+            $('#ID_CH_USUARIO').val(dados.dados.usuario_id_usuario)
         }
         }
     })
@@ -32,6 +31,9 @@ function CRUD(dados, url){
 
 
 $(document).ready(function(){
+    
+    carDados();
+
     $('#table-veiculo').DataTable({
         "processing": true,
         "serverSide": true,
@@ -46,7 +48,7 @@ $(document).ready(function(){
             [0, "desc"]
         ],
         "columns": [{
-                "data": 'id_veiculo',
+                "data": 'id',
                 "className": 'text-center'
             },
             {
@@ -70,7 +72,7 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'id_veiculo',
+                "data": 'id',
                 "orderable": false,
                 "searchable": false,
                 "className": 'text-center',
@@ -86,6 +88,33 @@ $(document).ready(function(){
     })
 
 
+    function carDados() {
+
+        $('.ID_CH_USUARIO').each(function() {
+        var name = $(this).attr('id');
+        var opcoes = '<option value="">Escolha a opção...</option>';
+        data = name.split('_');
+        var dados = 'banco=';
+        dados += data[data.length - 1];
+        dados += '&operacao=viewAll';
+        
+        $.ajax({
+            dataType: 'JSON',
+            type: 'POST',
+            async: true,
+            url: "api/models/veiculoController.php",
+            data: dados,
+            success: function(dados) {
+                if (dados.type == "success") {
+                    $.each(dados.dados, function(indexInArray, valueOfElement) {
+                        opcoes += '<option value="' + valueOfElement.id + '">' + valueOfElement.nome_usuario + '</option>';
+                    });
+                    $('#' + name).html(opcoes);
+                }
+            }
+        });
+    });
+}
 
 
 $('.btn-new').click(function(e){
@@ -118,7 +147,7 @@ $('#table-veiculo').on('click', 'button.btn-view', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Visualização de registros')
-    let dados = `id_veiculo=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/veiculoController.php'
 
     CRUD(dados, url)
@@ -134,7 +163,7 @@ $('#table-veiculo').on('click', 'button.btn-edit', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Edição de registros')
-    let dados = `id_veiculo=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/veiculoController.php'
 
     CRUD(dados, url)
@@ -160,7 +189,7 @@ $('#table-veiculo').on('click', 'button.btn-delete', function(e){
         cancelButtonText: 'Não, desejo cancelar'
     }) .then((result => {
         if(result.isConfirmed){
-            let dados = `id_veiculo=${$(this).attr('id')}&operacao=delete`
+            let dados = `id=${$(this).attr('id')}&operacao=delete`
     let url = 'api/models/veiculoController.php'
 
     CRUD(dados, url)

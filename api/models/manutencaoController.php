@@ -8,36 +8,13 @@ date_default_timezone_set ('America/Sao_Paulo');
 $dataLocal = date('Y-m-d H:i:s', time());
 
 
-function Verificando() {
-    $requestData = $_REQUEST;
-    $error = "";
-    $dados = array("type" => 'success');
 
-    foreach($requestData as $chave => $value){
-        if(is_null($value) || empty($value)){
-            $error .=  "{$chave}";
-            $error .= ", ";
-            $msg = "Faltou vc prencher os dados associados a/ao {$error}";
-            $dados = array(
-                "type" => 'error',
-                "mensagem" => $msg
-            );
-        }
-    }
-    $teste = $dados["type"] == "error" ? true : false;
-    if($teste == true){
-        echo json_encode($dados);
-        die();
-    }
-}
 
 if($requestData['operacao'] == 'create'){
-    Verificando();
     if(Chave_Estrangeira($requestData, $pdo)){
         try{
             $valorTotal = $requestData['valor_servico'] + $requestData['valor_pecas'];
-            // gerar a querie de insersao no banco de dados 
-            $sql = "INSERT INTO manutencao (data, valor_servico, valor_pecas, valor_total, descricao, veiculo, oficina, pecas) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"; // colocar ? para deixar mais seguro
+            $sql = "INSERT INTO manutencao (data, valor_servico, valor_pecas, valor_total, descricao, veiculo_id_veiculo, oficina_id_oficina, pecas) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"; // colocar ? para deixar mais seguro
             // preparar a querie para gerar objetos de insersao no banco de dados
         
             $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
@@ -51,7 +28,8 @@ if($requestData['operacao'] == 'create'){
                 $requestData['descricao'],
                 $requestData['ID_CH_VEICULO'],
                 $requestData['ID_CH_OFICINA'],
-                $requestData['ID_CH_PECA']
+                $requestData['ID_CH_PECAS'],
+
 
             ]);
         
@@ -115,8 +93,9 @@ if($requestData['operacao'] == 'create'){
 if($requestData['operacao'] == 'update'){
     
     try{
-
-        $sql = "UPDATE manutencao SET data = ?, valor_servico = ?, valor_pecas = ?, valor_total = ?, descricao = ?, veiculo = ?, oficina = ?, pecas = ?  WHERE id_manutencao = ?";
+        $valorTotal = $requestData['valor_servico'] + $requestData['valor_pecas'];
+        
+        $sql = "UPDATE manutencao SET data = ?, valor_servico = ?, valor_pecas = ?, valor_total = ?, descricao = ?, veiculo_id_veiculo = ?, oficina_id_oficina = ?, pecas = ?  WHERE id_manutencao = ?";
         // preparar a querie para gerar objetos de insersao no banco de dados
     
         $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
@@ -126,11 +105,11 @@ if($requestData['operacao'] == 'update'){
                 $dataLocal,
                 $requestData['valor_servico'],
                 $requestData['valor_pecas'],
-                $requestData['valor_total'],
+                $valorTotal, 
                 $requestData['descricao'],
                 $requestData['ID_CH_VEICULO'],
                 $requestData['ID_CH_OFICINA'],
-                $requestData['ID_CH_PECA'],
+                $requestData['ID_CH_PECAS'],
                 $requestData['id_manutencao']
         ]);
         

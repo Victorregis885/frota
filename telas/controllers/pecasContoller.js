@@ -1,4 +1,3 @@
-
 function CRUD(dados, url){
     $.ajax({
         dataType: 'JSON',
@@ -16,7 +15,7 @@ function CRUD(dados, url){
             $('#modal-pecas').modal('hide')
         }
         else if(dados.type == 'view'){
-            $('#id_peca').val(dados.dados.id_peca)
+            $('#id').val(dados.dados.id)
             $('#nome_peca').val(dados.dados.nome_peca)
             $('#fabricante_peca').val(dados.dados.fabricante_peca)
             $('#preco').val(dados.dados.preco)
@@ -43,7 +42,7 @@ $(document).ready(function(){
             [0, "desc"]
         ],
         "columns": [{
-                "data": 'id_peca',
+                "data": 'id',
                 "className": 'text-left'
             },
             {
@@ -59,7 +58,7 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'id_peca',
+                "data": 'id',
                 "orderable": false,
                 "searchable": false,
                 "className": 'text-center',
@@ -107,7 +106,7 @@ $('#table-pecas').on('click', 'button.btn-view', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Visualização de registros')
-    let dados = `id_peca=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/pecasController.php'
 
     CRUD(dados, url)
@@ -123,7 +122,7 @@ $('#table-pecas').on('click', 'button.btn-edit', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Edição de registros')
-    let dados = `id_peca=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/pecasController.php'
 
     CRUD(dados, url)
@@ -149,7 +148,7 @@ $('#table-pecas').on('click', 'button.btn-delete', function(e){
         cancelButtonText: 'Não, desejo cancelar'
     }) .then((result => {
         if(result.isConfirmed){
-            let dados = `id_peca=${$(this).attr('id')}&operacao=delete`
+            let dados = `id=${$(this).attr('id')}&operacao=delete`
     let url = 'api/models/pecasController.php'
 
     CRUD(dados, url)

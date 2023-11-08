@@ -54,7 +54,7 @@ if($requestData['operacao'] == 'create'){
         if( !empty( $filtro ) ){
             //Montar a expressão lógica que irá compor os filtros
             //Aqui você deverá determinar quais colunas farão parte do filtro
-            $sql .= " AND (id_oficina LIKE '$filtro%' ";
+            $sql .= " AND (id LIKE '$filtro%' ";
             $sql .= " OR nome_oficina LIKE '$filtro%') ";
         }
         //Obter o total dos dados filtrados
@@ -88,7 +88,7 @@ if($requestData['operacao'] == 'update'){
     
     try{
 
-        $sql = "UPDATE oficina SET nome_oficina = ?, telefone = ?, rua = ?, bairro = ?, numero = ?  WHERE id_oficina = ?";
+        $sql = "UPDATE oficina SET nome_oficina = ?, telefone = ?, rua = ?, bairro = ?, numero = ?  WHERE id = ?";
         // preparar a querie para gerar objetos de insersao no banco de dados
     
         $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
@@ -100,7 +100,7 @@ if($requestData['operacao'] == 'update'){
             $requestData['rua'],
             $requestData['bairro'],
             $requestData['numero'],
-            $requestData['id_oficina']
+            $requestData['id']
         ]);
         
     
@@ -131,14 +131,14 @@ if($requestData['operacao'] == 'delete'){
 
         
         // gerar a querie de insersao no banco de dados 
-        $sql = "DELETE FROM oficina WHERE id_oficina = ?";
+        $sql = "DELETE FROM oficina WHERE id = ?";
         // preparar a querie para gerar objetos de insersao no banco de dados
     
         $stmt = $pdo->prepare($sql); // atribuindo para ver se existe
     
         // se existir requerir os valores
         $stmt->execute([
-            $requestData['id_oficina']
+            $requestData['id']
         ]);
     
         // tranforma os dados em um array
@@ -169,7 +169,7 @@ if($requestData['operacao'] == 'delete'){
 if($requestData['operacao'] == 'view'){
     
     // gerar a querie de insersao no banco de dados 
-    $sql = "SELECT * FROM oficina WHERE id_oficina = ".$requestData['id_oficina']."";
+    $sql = "SELECT * FROM oficina WHERE id = ".$requestData['id']."";
     // preparar a querie para gerar objetos de insersao no banco de dados
 
     $resultado = $pdo->query($sql);

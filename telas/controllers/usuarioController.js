@@ -17,7 +17,7 @@ function CRUD(dados, url){
             $('#modal-usuario').modal('hide')
         }
         else if(dados.type == 'view'){
-            $('#id_usuario').val(dados.dados.id_usuario)
+            $('#id').val(dados.dados.id)
             $('#nome_usuario').val(dados.dados.nome_usuario)
             $('#login').val(dados.dados.login)
             $('#senha').val(dados.dados.senha)
@@ -75,7 +75,7 @@ $(document).ready(function(){
             [0, "desc"]
         ],
         "columns": [{
-                "data": 'id_usuario',
+                "data": 'id',
                 "className": 'text-center'
             },
             {
@@ -95,7 +95,7 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'id_usuario',
+                "data": 'id',
                 "orderable": false,
                 "searchable": false,
                 "className": 'text-center',
@@ -141,7 +141,7 @@ $('#table-usuario').on('click', 'button.btn-view', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Visualização de registros')
-    let dados = `id_usuario=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/usuarioController.php'
 
     CRUD(dados, url)
@@ -155,7 +155,7 @@ $('#table-usuario').on('click', 'button.btn-edit', function(e){
     
     $('.modal-title').empty()
     $('.modal-title').append('Edição de registros')
-    let dados = `id_usuario=${$(this).attr('id')}&operacao=view`
+    let dados = `id=${$(this).attr('id')}&operacao=view`
     let url = 'api/models/usuarioController.php'
 
     CRUD(dados, url)
@@ -178,7 +178,7 @@ $('#table-usuario').on('click', 'button.btn-delete', function(e){
         cancelButtonText: 'Não, desejo cancelar'
     }) .then((result => {
         if(result.isConfirmed){
-            let dados = `id_usuario=${$(this).attr('id')}&operacao=delete`
+            let dados = `id=${$(this).attr('id')}&operacao=delete`
     let url = 'api/models/usuarioController.php'
 
     CRUD(dados, url)

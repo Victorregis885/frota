@@ -1,4 +1,3 @@
-
 function CRUD(dados, url){
     $.ajax({
         dataType: 'JSON',
@@ -22,14 +21,13 @@ function CRUD(dados, url){
                 $('#valor_servico').val(dados.dados.valor_servico)
                 $('#valor_pecas').val(dados.dados.valor_pecas)
 
-                // Calcular o valor_total aqui
                 let valorTotal = parseFloat(dados.dados.valor_servico) + parseFloat(dados.dados.valor_pecas);
                 $('#valor_total').val(valorTotal.toFixed(2))
 
                 $('#descricao').val(dados.dados.descricao)
-                $('#ID_CH_VEICULO').val(dados.dados.veiculo)
-                $('#ID_CH_OFICINA').val(dados.dados.oficina)
-                $('#ID_CH_PECA').val(dados.dados.pecas)
+                $('#ID_CH_VEICULO').val(dados.dados.veiculo_id_veiculo)
+                $('#ID_CH_OFICINA').val(dados.dados.oficina_id_oficina)
+                $('#ID_CH_PECAS').val(dados.dados.pecas)
         }
         }
     })
@@ -39,6 +37,9 @@ function CRUD(dados, url){
 
 
 $(document).ready(function(){
+    carDados()
+    carDados2()
+    carDados3()
     $('#table-manutencao').DataTable({
         "processing": true,
         "serverSide": true,
@@ -77,11 +78,11 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'veiculo',
+                "data": 'veiculo_id_veiculo',
                 "className": 'text-left'
             },
             {
-                "data": 'oficina',
+                "data": 'oficina_id_oficina',
                 "className": 'text-left'
             },
             {
@@ -107,7 +108,7 @@ $(document).ready(function(){
 
     function carDados() {
 
-        $('.select').each(function() {
+        $('#ID_CH_OFICINA').each(function() {
         var name = $(this).attr('id');
         var opcoes = '<option value="">Escolha a opção...</option>';
         data = name.split('_');
@@ -124,13 +125,70 @@ $(document).ready(function(){
             success: function(dados) {
                 if (dados.type == "success") {
                     $.each(dados.dados, function(indexInArray, valueOfElement) {
-                        opcoes += '<option value="' + valueOfElement.ID + '">'  + '</option>';
+                        opcoes += '<option value="' + valueOfElement.id + '">'  + valueOfElement.nome_oficina + '</option>';
                     });
                     $('#' + name).html(opcoes);
                 }
             }
         });
     });
+}
+
+
+function carDados2() {
+
+    $('#ID_CH_VEICULO').each(function() {
+    var name = $(this).attr('id');
+    var opcoes = '<option value="">Escolha a opção...</option>';
+    data = name.split('_');
+    var dados = 'banco=';
+    dados += data[data.length - 1];
+    dados += '&operacao=viewAll';
+    
+    $.ajax({
+        dataType: 'JSON',
+        type: 'POST',
+        async: true,
+        url: "api/models/manutencaoController.php",
+        data: dados,
+        success: function(dados) {
+            if (dados.type == "success") {
+                $.each(dados.dados, function(indexInArray, valueOfElement) {
+                    opcoes += '<option value="' + valueOfElement.id + '">'  + valueOfElement.placa + '</option>';
+                });
+                $('#' + name).html(opcoes);
+            }
+        }
+    });
+});
+}
+
+function carDados3() {
+
+    $('#ID_CH_PECAS').each(function() {
+    var name = $(this).attr('id');
+    var opcoes = '<option value="">Escolha a opção...</option>';
+    data = name.split('_');
+    var dados = 'banco=';
+    dados += data[data.length - 1];
+    dados += '&operacao=viewAll';
+    
+    $.ajax({
+        dataType: 'JSON',
+        type: 'POST',
+        async: true,
+        url: "api/models/manutencaoController.php",
+        data: dados,
+        success: function(dados) {
+            if (dados.type == "success") {
+                $.each(dados.dados, function(indexInArray, valueOfElement) {
+                    opcoes += '<option value="' + valueOfElement.id + '">'  + valueOfElement.nome_peca + '</option>';
+                });
+                $('#' + name).html(opcoes);
+            }
+        }
+    });
+});
 }
 
     $('.btn-new').click(function(e){
@@ -148,7 +206,6 @@ $(document).ready(function(){
         e.preventDefault()
     
         let dados = $('#form-manutencao').serialize()
-        //console.log(dados)
         dados += `&operacao=${$('.btn-save').attr('data-operation')}&ID=${$('#modal-manutencao').attr('data-id')}&tabela=manutencao` 
         console.log(dados)
         let url = 'api/models/manutencaoController.php'
