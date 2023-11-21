@@ -32,16 +32,17 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light fixed-top border-bottom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="sistema.html">Logo</a>
+            <a class="navbar-brand" href="sistema.html " id="title">DirigeBem Plus</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTopo"
                 aria-controls="navbarTopo" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarTopo">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <button class="btn-logout">Sair</button>
+                        <button class="btn-logout sair" id="sair">Sair
+                        <i class='bx bx-exit icon-sair'></i>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -53,14 +54,10 @@
             <nav class="col-md-3 col-lg-2 d-md-block mt-5 sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active text-dark" href="sistema.html">
-                                <i class='bx bxs-dashboard'></i> Dashboard
-                            </a>
-                        </li>
+                        
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark" href="telas/manutençao_pendente/pendentes.html" id=""
+                            <a class="nav-link " href="telas/manutençao_pendente/pendentes.html" id=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bxs-wrench'></i> Manutenção 
                             </a>
@@ -68,7 +65,7 @@
                         
                         <!--Cadastro de Veiculos-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark" href="telas/registrar_frotas/frota.html" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link " href="telas/registrar_frotas/frota.html" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bxs-bus-school'></i> Frota
                             </a>
                             
@@ -76,27 +73,27 @@
 
                         <!--Cadastro de oficinas-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark" href="telas/oficina/oficina.html" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link " href="telas/oficina/oficina.html" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bxs-car-mechanic'></i> Oficinas
                             </a>
                             
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark" href="telas/almoxerifado/estoque.html" id=""
+                            <a class="nav-link " href="telas/almoxerifado/estoque.html" id=""
                                 data-toggle="" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bxs-food-menu'></i> Almoxarifado
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark" href="telas/usuario/usuario.html" id=""
+                            <a class="nav-link " href="telas/usuario/usuario.html" id=""
                                 data-toggle="" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bxs-user'></i> Usuario
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active text-dark" href="telas/despesas/despesas.html">
-                                <i class='bx bxs-objects-vertical-bottom'></i> Despesas
+                            <a class="nav-link active " href="telas/despesas/despesas.html">
+                                <i class='bx bxs-spreadsheet' ></i> Historico
                             </a>
                         </li>
                     </ul>
@@ -107,6 +104,9 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-5 main-content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                     <h1 class="h2 animated-text">Gerenciamento de Manutenção de Frotas</h1>
+
+                  
+
                 </div>
             
                 <div class="container" id="content">
@@ -127,21 +127,8 @@
             
         </div>
     </div>  
-
-
-
     
-    <footer class="footer fixed-bottom">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="mb-0 text-dark text-center">
-                        © 2023 Todos os direitos reservados
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+
 
 
 
@@ -160,6 +147,6 @@
 
 
 
-    
+
 </body>
 </html>

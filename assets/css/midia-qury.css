@@ -12,7 +12,7 @@ Grandes telas: acima de 1200px
 
 @media screen and (min-width: 0px) and (max-width: 768px) { /* CONFIGURAÇÃO PARA TABLET */
     body {
-        background-image: linear-gradient(to top, #49a09d, #64cfcc, #b678df );
+        background-image: linear-gradient(to top, #c5c5c5, #363838, #3a3535 );
     }
 
     section#login {
@@ -35,7 +35,7 @@ Grandes telas: acima de 1200px
 
 @media screen and (min-width: 768px) and (max-width: 992px) { /* CONFIGURAÇÃO PARA TABLET */
     body {
-        background-image: linear-gradient(to top, #49a09d, #64cfcc, #b678df );
+        background-image: linear-gradient(to top, #c5c5c5, #363838, #3a3535 );
     }
 
     section#login {
@@ -57,7 +57,7 @@ Grandes telas: acima de 1200px
 
 @media screen and (min-width: 992px) { /* CONFIGURAÇÕES PARA DESKTOP */
     body {
-        background-image: linear-gradient(to top, #49a09d, #64cfcc, #b678df );
+        background-image: linear-gradient(to top, #c5c5c5, #363838, #3a3535 );
     }
 
     section#login {

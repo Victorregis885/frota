@@ -110,7 +110,7 @@ if($requestData['operacao'] == 'update'){
                 $requestData['ID_CH_VEICULO'],
                 $requestData['ID_CH_OFICINA'],
                 $requestData['ID_CH_PECAS'],
-                $requestData['id_manutencao']
+                $requestData['id_manutencao'],
         ]);
         
     

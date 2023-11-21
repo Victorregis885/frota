@@ -44,7 +44,7 @@ section#login {
 
 section#login > div#imagem {
     display: block;
-    background: #5f2c82 url(../img/caminhoes-frota.webp) no-repeat;
+    background: #010101 url(../img/caminhoes-frota.webp) no-repeat;
     background-size: cover;
     background-position: left bottom;
     height: 200px;
@@ -65,8 +65,8 @@ div#formulario > p {
 }
 
 form > div.campo {
-    background-color: #5f2c82;
-    border: 2px solid #5f2c82;
+    background-color: #242424;
+    border: 2px solid #242424;
     display: block;
     width: 100%;
     height: 40px;
@@ -107,7 +107,7 @@ form > .btn {
     font-size: 1em;
     width: 100%;
     height: 40px;
-    background-color: #53aaa7;
+    background: linear-gradient( to top left, #b5b5b5, #000000) ;
     color: white;
     border: none;
     border-radius: 5px;
@@ -115,7 +115,7 @@ form > .btn {
 }
 
 form > .btn:hover {
-    background-color: #2d6462;
+    background: linear-gradient( to top left, #000000, #b5b5b5) ;
 }
 
 form > a.botao {

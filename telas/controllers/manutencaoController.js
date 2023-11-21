@@ -57,21 +57,21 @@ $(document).ready(function(){
                 "data": 'data',
                 "className": 'texte-center'
             },
-            {
+           {
                 "data": 'id_manutencao',
                 "className": 'text-center'
             },
             {
                 "data": 'valor_servico',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'valor_pecas',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'valor_total',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'descricao',
@@ -79,15 +79,15 @@ $(document).ready(function(){
             },
             {
                 "data": 'veiculo_id_veiculo',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'oficina_id_oficina',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'pecas',
-                "className": 'text-left'
+                "className": 'text-center'
             },
             {
                 "data": 'id_manutencao',

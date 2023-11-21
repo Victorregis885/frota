@@ -1,41 +1,29 @@
 body {
     background-color: #f8f9fe;
-
 }
 
-.navbar {
-    background-color: #ffffff;
-
+.navbar .row .container-fluid  {
+    background-color: #1a1a1a;
     height: 45px;
-
-    font-family: 'Bebas Neue', sans-serif;
-    font-family: 'Crete Round', serif;
-    font-family: 'Gloock', serif;
-    font-family: 'Prompt', sans-serif;
     font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Slab', serif;
+    color: #fff;
 }
 
 .sidebar {
-    font-family: 'Bebas Neue', sans-serif;
-    font-family: 'Crete Round', serif;
-    font-family: 'Gloock', serif;
-    font-family: 'Prompt', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Slab', serif;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 220px;
-    background-color: #fff;
+    background-color: #1a1a1a;
     border-right: 1px solid #e9ecef;
     z-index: 1;
-
+    font-family: 'Roboto', sans-serif;
 }
 
 .sidebar .nav-item {
     margin-bottom: 0.9rem;
+    
 }
 
 .sidebar-sticky {
@@ -52,6 +40,7 @@ body {
     border-top: 1px solid #e9ecef;
     padding: 0.70rem 1.25rem;
     color: #6c757d;
+    font-family: 'Roboto', sans-serif;
 }
 
 @keyframes slideIn {
@@ -68,4 +57,103 @@ body {
 
 .animated-text {
     animation: slideIn 1s ease-in-out;
+}
+
+/* Additional Styling */
+a {
+    color: #007bff; /* Blue link color */
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-logout {
+    background-color: #dc3545; /* Red logout button */
+    color: #fff;
+}
+
+.btn-logout:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Add more styles as needed */
+
+
+
+
+
+
+/* Adiciona estilos específicos para o modo escuro */
+body.dark-mode {
+    background-color: #121212; /* Cor de fundo escura */
+    color: #ffffff; /* Cor do texto branca */
+}
+
+.navbar.dark-mode {
+    background-color: #1a1a1a; /* Cor de fundo da barra de navegação no modo escuro */
+    border-bottom: 1px solid #272727; /* Cor da borda inferior na barra de navegação no modo escuro */
+}
+
+.sidebar.dark-mode {
+    background-color: #111111; /* Cor de fundo da barra lateral no modo escuro */
+    border-right: 1px solid #1a1a1a; /* Cor da borda na barra lateral no modo escuro */
+}
+
+
+
+
+.footer.dark-mode {
+    background-color: #1a1a1a; /* Cor de fundo do rodapé no modo escuro */
+    border-top: 1px solid #272727; /* Cor da borda superior no rodapé no modo escuro */
+    color: #b0b0b0; /* Cor do texto no rodapé no modo escuro */
+}
+
+.btn-logout.dark-mode {
+    background-color: #c0392b; /* Cor do botão de logout no modo escuro */
+    color: #fff;
+}
+
+.btn-logout.dark-mode:hover {
+    background-color: #a5281a; /* Cor mais escura ao passar o mouse no botão de logout no modo escuro */
+}
+
+/* Adicione mais estilos escuros conforme necessário */
+.nav-link {
+    position: relative;
+    color: #fff;
+    font-size: 20px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-radius: 2px;
+    z-index: -1;
+    transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
+    transform-origin: bottom;
+}
+
+.nav-link:hover:before {
+    top: 0;
+    /* Move o elemento para cima quando passa o mouse /
+    height: 100%;
+    / Aumenta a altura para cobrir o botão */
+}
+
+.nav-link:hover {
+    background-color: #807e7e;
+    transition: 0.3s;
+    color: #fff;
+    border-radius: 10px;
+}
+
+
+#title{
+    color: #fff;
 }
