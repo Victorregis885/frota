@@ -5,19 +5,9 @@ include('../conexao/conn.php');
 $requestData = $_REQUEST;
 
 if($requestData['operacao'] == 'create'){
-
     if(Chave_Estrangeira($requestData, $pdo)){
-
-    if(empty($_REQUEST['placa']) || empty($_REQUEST['marca']) || empty($_REQUEST['combustivel']) || empty($_REQUEST['cor']) || empty($_REQUEST['usuario_id_usuario'])){
-        $dados = array(
-            "type" => 'error',
-            "mensagem" => 'Existe(m) campo(s) obrigatório(s) não preenchido(s).'
-        );
-    }
-    else { 
         try{
-            
-            $sql = "INSERT INTO veiculo (placa, marca, combustivel, cor, usuario_id_usuario) VALUES (?, ?, ?, ?, ?)"; 
+            $sql = "INSERT INTO veiculo (placa, marca, combustivel, cor, usuario) VALUES (?, ?, ?, ?, ?)"; 
             
         
             $stmt = $pdo->prepare($sql); 
@@ -44,7 +34,7 @@ if($requestData['operacao'] == 'create'){
         echo json_encode($dados);
     }
     }
-}
+
 
     if($requestData['operacao'] == 'read'){
         $colunas = $requestData['columns']; 
@@ -88,7 +78,7 @@ if($requestData['operacao'] == 'create'){
     }
 
 if($requestData['operacao'] == 'update'){
-    if(empty($_REQUEST['placa']) || empty($_REQUEST['marca']) || empty($_REQUEST['combustivel']) || empty($_REQUEST['cor']) || empty($_REQUEST['usuario_id_usuario'])){
+    if(empty($_REQUEST['placa']) || empty($_REQUEST['marca']) || empty($_REQUEST['combustivel']) || empty($_REQUEST['cor']) || empty($_REQUEST['usuario'])){
         $dados = array(
             "type" => 'error',
             "mensagem" => 'Existe(m) campo(s) obrigatório(s) não preenchido(s).'
@@ -97,7 +87,7 @@ if($requestData['operacao'] == 'update'){
     else { 
     try{
 
-        $sql = "UPDATE veiculo SET placa = ?, marca = ?, combustivel = ?, cor = ?, usuario_id_usuario = ? WHERE id = ?";
+        $sql = "UPDATE veiculo SET placa = ?, marca = ?, combustivel = ?, cor = ?, usuario = ? WHERE id = ?";
     
         $stmt = $pdo->prepare($sql); 
     
@@ -225,7 +215,7 @@ function Chave_Estrangeira(Array $dados, $pdo){
 
                 $copArray = $array;
                 $NewArray = array_pop($copArray);
-     
+    
                 $NewArray = array_diff($array, [$NewArray]);
                 $indice = array_key_first($NewArray);
                 $ColEstrang = $NewArray[$indice];

@@ -21,7 +21,7 @@ function CRUD(dados, url){
             $('#marca').val(dados.dados.marca)
             $('#combustivel').val(dados.dados.combustivel)
             $('#cor').val(dados.dados.cor)
-            $('#ID_CH_USUARIO').val(dados.dados.usuario_id_usuario)
+            $('#ID_CH_USUARIO').val(dados.dados.usuario)
         }
         }
     })
@@ -68,7 +68,7 @@ $(document).ready(function(){
                 "className": 'text-left'
             },
             {
-                "data": 'usuario_id_usuario',
+                "data": 'usuario',
                 "className": 'text-left'
             },
             {
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
     function carDados() {
 
-        $('.ID_CH_USUARIO').each(function() {
+        $('#ID_CH_USUARIO').each(function() {
         var name = $(this).attr('id');
         var opcoes = '<option value="">Escolha a opção...</option>';
         data = name.split('_');
@@ -120,25 +120,27 @@ $(document).ready(function(){
 $('.btn-new').click(function(e){
     e.preventDefault()
     $('.modal-title').empty()
-    $('.modal-title').append('Cadastro de Veiculo')
+    $('.modal-title').append('Cadastro de veiculo')
     $('#form-veiculo :input').val('')
     $('.btn-save').show()
     $('.btn-save').attr('data-operation', 'create')
     $('#modal-veiculo').modal('show')
     $('input').prop('disabled', false)
+    $('select').prop('disabled', false)
 })
 $('.btn-save').click(function(e){
-e.preventDefault()
+    e.preventDefault()
 
-let dados = $('#form-veiculo').serialize()
-dados += `&operacao=${$('.btn-save').attr('data-operation')}` 
+    let dados = $('#form-veiculo').serialize()
+    dados += `&operacao=${$('.btn-save').attr('data-operation')}&ID=${$('#modal-veiculo').attr('data-id')}&tabela=veiculo` 
+    console.log(dados)
+    let url = 'api/models/veiculoController.php'
 
-let url = 'api/models/veiculoController.php'
+    CRUD(dados, url)
 
-CRUD(dados, url)
-
-$('#table-veiculo').DataTable().ajax.reload()
+    $('#table-veiculo').DataTable().ajax.reload()
 })
+
 
 
 
@@ -207,4 +209,3 @@ $('#table-veiculo').on('click', 'button.btn-delete', function(e){
 })
 
 })
-
